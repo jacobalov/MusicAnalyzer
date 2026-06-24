@@ -1,6 +1,11 @@
 #include <iostream>
+#include "analyzer.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    std::cout << "Starting MusicAnalyzer..." << std::endl;
+
+    AudioAnalyzer analyzer;
+    analyzer.initializePipeline("test_track.wav");
+
     return 0;
 }
