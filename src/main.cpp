@@ -2,7 +2,7 @@
 #include "analyzer.h"
 
 int main() {
-    std::cout << "Starting MusicAnalyzer..." << std::endl;
+    std::cout << "=== Starting MusicAnalyzer ===" << std::endl;
 
     AudioAnalyzer analyzer;
     analyzer.initializePipeline("test_track.wav");

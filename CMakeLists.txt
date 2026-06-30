@@ -1,11 +1,14 @@
 cmake_minimum_required(VERSION 3.15)
-project("MusicAnalyzer" VERSION 1.0.0 LANGUAGES CXX)
+project("MusicAnalyzer" VERSION 1.0.0 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-implicit-function-declaration -Wno-builtin-declaration-mismatch -include stddef.h -include stdio.h -include stdarg.h")
+endif()
 
 include(FetchContent)
 
@@ -32,10 +35,23 @@ include_directories(include)
 add_executable(MusicAnalyzer 
     src/main.cpp 
     src/analyzer.cpp
+    
     ${aubio_SOURCE_DIR}/src/fvec.c
+    ${aubio_SOURCE_DIR}/src/cvec.c
+    ${aubio_SOURCE_DIR}/src/lvec.c
     ${aubio_SOURCE_DIR}/src/mathutils.c
-    ${aubio_SOURCE_DIR}/src/pitch/pitch.c
-    ${aubio_SOURCE_DIR}/src/pitch/pitchyinfft.c
-    ${aubio_SOURCE_DIR}/src/pitch/pitchyin.c
+    ${aubio_SOURCE_DIR}/src/utils/log.c
     ${aubio_SOURCE_DIR}/src/spectral/fft.c
-    ${aubio_SOURCE_DIR}/src/spectral/phasevoc.c)
+    ${aubio_SOURCE_DIR}/src/spectral/phasevoc.c
+    ${aubio_SOURCE_DIR}/src/spectral/ooura_fft8g.c
+    ${aubio_SOURCE_DIR}/src/pitch/pitch.c
+    ${aubio_SOURCE_DIR}/src/pitch/pitchyin.c
+    ${aubio_SOURCE_DIR}/src/pitch/pitchyinfft.c
+    ${aubio_SOURCE_DIR}/src/pitch/pitchyinfast.c
+    ${aubio_SOURCE_DIR}/src/pitch/pitchschmitt.c
+    ${aubio_SOURCE_DIR}/src/pitch/pitchfcomb.c
+    ${aubio_SOURCE_DIR}/src/pitch/pitchmcomb.c
+    ${aubio_SOURCE_DIR}/src/pitch/pitchspecacf.c
+    ${aubio_SOURCE_DIR}/src/temporal/filter.c
+    ${aubio_SOURCE_DIR}/src/temporal/c_weighting.c
+    ${aubio_SOURCE_DIR}/src/temporal/a_weighting.c)
